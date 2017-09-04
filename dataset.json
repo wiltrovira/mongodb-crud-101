@@ -1,0 +1,21 @@
+
+{
+	"primerNombre" : "Eddier",
+	"segundoNombre" : "Alberto",
+	"primerApellido" : "Galeano",
+	"segundoApellido" : "Mondragón",
+	"estadoCivil" : "Casado",
+	"generoSexo" : "Hombre",
+	"idiomaPreferido" : "Español",
+	"fechaDeNacimiento" : "1984/08/13",
+	"permalink" : "eddierg",
+	"correoElectronico" : "eddierg@visionsoftware.com.co",
+	"avatar" : "avatar",
+	"passwordHash" : "Password",
+	"passwordSalt" : "Password",
+	"timeStamp" : "2017/09/02",
+	"fechaDeCreacion" : "2017/09/02",
+	"fechaDeUltimaModificacion" : "2017/09/02",
+	"prefijo" : "Sr.",
+	"sufijo" : ""
+}

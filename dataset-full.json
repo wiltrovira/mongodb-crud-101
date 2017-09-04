@@ -1,0 +1,38 @@
+
+{
+	"primerNombre" : "Eddier",
+	"segundoNombre" : "Alberto",
+	"primerApellido" : "Galeano",
+	"segundoApellido" : "Mondragón",
+	"estadoCivil" : "Casado",
+	"generoSexo" : "Hombre",
+	"idiomaPreferido" : "Español",
+	"fechaDeNacimiento" : "1984/08/13",
+	"permalink" : "eddierg",
+	"correoElectronico" : "eddierg@visionsoftware.com.co",
+	"avatar" : "avatar",
+	"passwordHash" : "Password",
+	"passwordSalt" : "Password",
+	"timeStamp" : "2017/09/02",
+	"fechaDeCreacion" : "2017/09/02",
+	"fechaDeUltimaModificacion" : "2017/09/02",
+	"prefijo" : "Sr.",
+	"sufijo" : "",
+	"preguntas" : [{
+		"esPrivada" : false,
+		"idioma" : "Español",
+		"tipoDePregunta" : "Selección única",
+		"imagen" : "url de la imagen o imagen embebida.",
+		"estaActiva" : true,
+		"permalink" : "preguntas6",
+		"textoDeLaPregunta" : "Quién es clarita?",
+		"categorias" : ["Personal", "Hogar"],
+		"tags" : ["Casa", "Familia" ],
+		"respuestas": [
+			{"textoDeLaRespuesta" : "Muscular","esCorrecta" : false,"explicacion" : "No es correcta"},
+			{"textoDeLaRespuesta" : "Sanguínea","esCorrecta" : false,"explicacion" : "No es correcta"},
+			{"textoDeLaRespuesta" : "Epitelial","esCorrecta" : false,"explicacion" : "No es correcta"},
+			{"textoDeLaRespuesta" : "Nerviosa","esCorrecta" : true,"explicacion" : "es la respuesta correcta"}
+		]
+	}]
+}
