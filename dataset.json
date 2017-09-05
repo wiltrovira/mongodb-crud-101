@@ -1,21 +1,20 @@
 
 {
-	"primerNombre" : "Eddier",
-	"segundoNombre" : "Alberto",
-	"primerApellido" : "Galeano",
-	"segundoApellido" : "Mondragón",
-	"estadoCivil" : "Casado",
+	"primerNombre" : "Pepe",
+	"segundoNombre" : "",
+	"primerApellido" : "Veraz",
+	"segundoApellido" : "Castaño",
+	"estadoCivil" : "Soltero",
 	"generoSexo" : "Hombre",
 	"idiomaPreferido" : "Español",
-	"fechaDeNacimiento" : "1984/08/13",
-	"permalink" : "eddierg",
-	"correoElectronico" : "eddierg@visionsoftware.com.co",
-	"avatar" : "avatar",
-	"passwordHash" : "Password",
-	"passwordSalt" : "Password",
+	"fechaDeNacimiento" : "1990/09/01",
+	"permalink" : "pepeveraz",
+	"correoElectronico" : "pepeveraz@example.com",
+	"avatarURI" : "./img-Wilt.jpg",
+	"password" : "MiPassword1",
 	"timeStamp" : "2017/09/02",
 	"fechaDeCreacion" : "2017/09/02",
 	"fechaDeUltimaModificacion" : "2017/09/02",
 	"prefijo" : "Sr.",
-	"sufijo" : ""
+	"sufijo" : "Jr."
 }

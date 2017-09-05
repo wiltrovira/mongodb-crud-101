@@ -1,5 +1,8 @@
 var mongoose =  require("mongoose");
-var promotorSchema = require("./person.server.model.js");
+var personaSchema = require("./persona.server.model.js");
+
+import {CryptoPassword} from "./crypto-password.js";
+
 var fs = require ("fs");
 var dataset = "./dataset.json";
 
@@ -9,9 +12,9 @@ Promise.promisifyAll(require("mongoose"));
 mongoose.Promise = Promise;
 
 //leer archivo de datos
-var promiseLeerDataset = function(archivo){
+var promiseLeerDataset = function(rutaArchivo){
 	return new Promise (function(resolve, reject){
-		fs.readFile(archivo, function(err, data) {
+		fs.readFile(rutaArchivo, function(err, data) {
 			if (err){
 				reject(err);
 			}else{
@@ -22,9 +25,24 @@ var promiseLeerDataset = function(archivo){
 	});
 };
 
+//leer archivo de datos
+var promiseLeerImagen = function(data, rutaImagen){
+	return new Promise (function(resolve, reject){
+		fs.readFile(rutaImagen, function(err, imagen) {
+			if (err){
+				reject(err);
+			}else{
+				//console.log("imagen... -->" + imagen);
+				resolve([data, imagen, "image/png"]);
+			}
+		});
+	});
+};
+
+
 //------------------------------//
 //Abrir la conexión - es una promesa
-var promiseAbrirConexion = function(host, db, puerto, data){
+var promiseAbrirConexion = function(host, db, puerto, data, imagen, tipoMIME){
 	return new Promise (function(resolve, reject){
 		var conn = mongoose.createConnection(host, db, puerto, function(err){
 			if (err){
@@ -32,23 +50,27 @@ var promiseAbrirConexion = function(host, db, puerto, data){
 			}else {
 				console.log("Conn en AbrirConexion --> " + conn.readyState);
 				console.log("Data en AbrirConexion --> " + data);
-				resolve ([conn, data]);
+				resolve ([conn, data, imagen, tipoMIME]);
 			}
 		});
 	});
 };
 
 //------------------------------//
-//Guardar los datos del promotor - es una promesa
-var promiseGuardarPromotor = function(conn, data){
+//Guardar los datos de la persona - es una promesa
+var promiseGuardarPersona = function(conn, data, imagen, tipoMIME){
 	return new Promise (function(resolve, reject){
 		
-		var Promotor = conn.model("Promotor", promotorSchema, "promotores");
+		var Persona = conn.model("Persona", personaSchema, "personas");
 		console.log("Data para guardar-->" + data);
 		var dataJSON = JSON.parse(data);
+
+		console.log("dataJSON a guardar -->");
 		console.log(dataJSON);
-	
-		var promotor = new Promotor({
+
+		var cryptoPassword = new CryptoPassword(dataJSON.password); //require("./crypto-password.js");
+		//Asigna los datos de la persona
+		var persona = new Persona({
 			primerNombre : dataJSON.primerNombre,
 			segundoNombre : dataJSON.segundoNombre,
 			primerApellido : dataJSON.primerApellido,
@@ -59,20 +81,23 @@ var promiseGuardarPromotor = function(conn, data){
 			fechaDeNacimiento : dataJSON.fechaDeNacimiento,
 			permalink : dataJSON.permalink,
 			correoElectronico : dataJSON.correoElectronico,
-			avatar : dataJSON.avatar,
-			passwordHash : dataJSON.passwordHash,
-			passwordSalt : dataJSON.passwordSalt,
+			password: dataJSON.password,
+			passwordSalt: cryptoPassword.salt,
+			passwordHash: cryptoPassword.passwordHash,
+			avatarURI : dataJSON.avatarURI,
+			avatar: { data: imagen, contentType: tipoMIME},
 			timeStamp : dataJSON.timeStamp,
 			fechaDeCreacion : dataJSON.fechaDeCreacion,
 			fechaDeUltimaModificacion : dataJSON.fechaDeUltimaModificacion,
 			prefijo : dataJSON.prefijo,
-			sufijo : dataJSON.prefijo
+			sufijo : dataJSON.sufijo
 		});
 		
-		promotor.save(function(err){
+		persona.save(function(err){
 			if (err){
 				reject(err);
 			}else{
+				console.log("Persona guardada! --> " + persona);
 				conn.close();
 				resolve("Operación exitosa!");
 			}
@@ -81,18 +106,24 @@ var promiseGuardarPromotor = function(conn, data){
 	});
 };
 
+//Ejecuta las promesas
 promiseLeerDataset(dataset)
 	.then (function(data){
-		console.log("promise 1 --> " + data);
-		return promiseAbrirConexion("localhost", "senquiu", 27017, data);
-	}).spread (function(conn, data){
+		console.log("Se leyó el archivo de datos --> " + data);
+		var dataJSON = JSON.parse(data);
+		var imagenURI = dataJSON.avatarURI;
+		console.log("la imagen está en la ruta --> " + imagenURI);
+		return promiseLeerImagen(data, imagenURI);
+	}).spread (function(data, imagen, tipoMIME){
+		return promiseAbrirConexion("localhost", "senquiu", 27017, data, imagen, tipoMIME);
+	}).spread (function(conn, data, imagen, tipoMIME){
 		console.log("promise 2 --> Estado de la conexión: " + conn.readyState);
 		console.log("promise 2 --> Data --> : " + data);
-		return promiseGuardarPromotor(conn, data);
+		return promiseGuardarPersona(conn, data, imagen, tipoMIME);
 	}).then (function(fromResolve){
 		console.log(fromResolve);
 	}).catch(function(err){
 		console.error("Error! --> " + err);
 	});
 
-console.log("Ejecutado al final");
+console.log("Esta es la última línea de código. ¿Cuándo debería ejecutarse? De manera asíncrona!");

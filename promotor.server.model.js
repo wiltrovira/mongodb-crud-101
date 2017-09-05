@@ -1,7 +1,10 @@
 var mongoose =  require("mongoose");
+var direcciones = require("./direccion.server.model.js");
+var telefonos = require("./telefono.server.model.js");
+var preguntas = require("./pregunta.server.model.js");
 
-var personSchema = new mongoose.Schema;
-personSchema.add({
+var promotorSchema = new mongoose.Schema;
+promotorSchema.add({
 	primerNombre : String,
 	segundoNombre : String,
 	primerApellido : String,
@@ -20,6 +23,9 @@ personSchema.add({
 	fechaDeUltimaModificacion : {type: Date, default: Date.now},
 	prefijo : String,
 	sufijo : String,
+	direccion: [direcciones],
+	telefonos: [telefonos],
+	preguntas: [preguntas]
 });
 
-module.exports = personSchema; //mongoose.model("Promotor", promotorSchema, "promotores");
+module.exports = promotorSchema; //mongoose.model("Promotor", promotorSchema, "promotores");

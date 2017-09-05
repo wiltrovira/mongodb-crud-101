@@ -4,7 +4,7 @@
   "description": "mongodb nodejs create read update delete crud basico",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node index.js"
   },
   "repository": {
     "type": "git",
